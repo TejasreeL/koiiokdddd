@@ -1,0 +1,107 @@
+#include<stdio.h>
+#include<conio.h>
+#define size 3
+int q[size],f=0,r=-1;
+
+int isfull()
+{
+ if((r==size-1 && f==0) || (f==r+1 && f!=0))
+ return 1;
+ else
+ return 0;
+}
+
+int isempty()
+{
+ if(f==0 && r==-1)
+ return 1;
+ else
+ return 0;
+}
+
+
+void insert (int e)
+{
+ if(isfull())
+ printf("Queue is full");
+ else
+ q[r=((r+1)%size)]=e;
+}
+
+int delete ()
+{
+ int x;
+ if(isempty())
+ {
+  printf("Queue is empty");
+  return -1;
+ }
+ else
+ {
+  x=q[f];
+  if(f==r)
+  {f=0; r=-1;}
+  else
+  f=(f+1)%size;
+  return x;
+ }
+}
+
+void display()
+{
+ int i=f;
+ while(i!=r)
+ {
+  printf("%d",q[i]);
+  i=(i+1)%size;
+ }
+ printf("%d",q[i]);
+}
+
+int count()
+{
+ int i=f,c=0;
+ while(i!=r)
+ {
+  c++;
+  i=(i+1)%size;
+ }
+ return c+1;
+}
+
+void main()
+{
+ int x,ele;
+ clrscr();
+ do
+ {
+  printf("1:insert 2:delete 3:display 4:isfull 5:isempty 6:count\n");
+  scanf("%d",&x);
+  switch(x)
+  {
+   case 1: printf("Enter element to be inserted\n");
+	   scanf("%d",&ele);
+	   insert(ele);
+	   break;
+   case 2: if((ele=delete())!=-1)
+	   printf("Deleted element = %d",ele);
+	   break;
+   case 3: display(); break;
+   case 4: if(isfull())
+	   printf("Full");
+	   else
+	   printf("Not full");
+	   break;
+   case 5: if(isempty())
+	   printf("Empty");
+	   else
+	   printf("Not empty");
+	   break;
+   case 6: printf("No. of elements = %d",count()); break;
+   default: printf("Invalid choice");
+  }
+  printf("\ndo you want to continue? (0/1)");
+  scanf("%d",&x);
+ }while(x==1);
+ getch();
+}
