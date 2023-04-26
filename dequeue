@@ -1,0 +1,100 @@
+#include<stdio.h>
+#define size 3
+int q[size],f=0,r=-1;
+void insertrear(int x)
+{
+	if(r==size-1)
+	printf("Insertion at rear end not possible");
+	else
+	q[++r]=x;
+}
+void insertfront(int x)
+{
+	if(f==0)
+	printf("Insertion at front end not possible");
+	else
+	q[--f]=x;
+}
+int deletefront()
+{
+	int x=-1;
+	if(f==size-1)
+	printf("deletion at front end not possible");
+	else
+	{
+		x=q[f];
+		if(f==r)
+		{f=0; r=-1;}
+		else
+		f++;
+	}
+	return x;
+}
+int deleterear()
+{
+	int x=-1;
+	if(r==-1)
+	printf("deletion at rear end not possible");
+	else
+	{
+		x=q[r];
+		if(f==r)
+		{f=0; r=-1;}
+		else
+		r--;
+	}
+	return x;
+}
+int isempty()
+{
+	if(f==0 && r==-1)
+	return 1;
+	else
+	return 0;
+}
+void display()
+{
+	if(!(isempty()))
+	{int i;
+	for(i=f;i<=r;i++)
+	printf("%d ",q[i]);}
+	else
+	printf("queue is empty");
+}
+int count()
+{
+	int i=0;
+	for(i=f;i<=r;i++);
+	return i;
+}
+
+int isfull()
+{
+	if(f==0 && r==size-1)
+	return 1;
+	else
+	return 0;
+}
+int main()
+{
+	int x,ele;
+	do
+	{
+		printf("1: insertf 2:insertr 3:deletef 4:deleter 5:display 6:count 7:isempty 8:isfull\n");
+		scanf("%d",&x);
+		switch(x)
+		{
+			case 1: printf("enter element to be inserted\n"); scanf("%d",&ele); insertfront(ele); break;
+			case 2: printf("enter element to be inserted\n"); scanf("%d",&ele); insertrear(ele); break;
+			case 3: if((ele=deletefront())!=-1) printf("%d deleted"); break;
+			case 4: if((ele=deleterear())!=-1) printf("%d deleted"); break;
+			case 5: display(); break;
+			case 6: printf("no. of elements = %d",count()); break;
+			case 7: if(isfull()) printf("full"); else printf("not full"); break;
+			case 8: if(isempty()) printf("empty"); else printf("not empty");
+		}
+		printf("do you want to continue? (0/1)");
+		scanf("%d",&x);
+	}while(x==1);
+	return 0;
+}
