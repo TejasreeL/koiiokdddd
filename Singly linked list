@@ -1,0 +1,244 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node 
+{
+	int x;
+	struct node *link;
+}*first,*temp,*nn,*last;
+
+struct node* create(struct node *f)
+{
+	int i;
+	do{
+	nn=(struct node *)malloc(sizeof(struct node));
+	printf("enter element");
+	scanf("%d",&nn->x);
+	if(f==NULL)
+	f=nn;
+	else
+	temp->link=nn;
+	temp=nn;
+	printf("do you want to continue with creation?(0/1)");
+	scanf("%d",&i);
+	}while(i==1);
+	temp->link=NULL;
+	last=nn;
+	return f;
+}
+
+void deleteb ()
+{
+	if(first==NULL)
+	printf("LL empty");
+	else
+	{
+		temp=first;
+		first=first->link;
+		temp->link=NULL;
+		free(temp);
+	}
+}
+
+void deletee ()
+{
+	if(first==NULL)
+	printf("LL empty");
+	else
+	{
+		temp=first;
+		while(temp->link->link!=NULL)
+		temp=temp->link;
+		temp->link=NULL;
+		free(temp->link);
+	}
+}
+
+void deletep ()
+{
+	int c=count(),pos;
+	printf("enter position\n");
+	scanf("%d",&pos);
+	if(c==0)
+	printf("LL empty");
+	else if(pos==1)
+	deleteb();
+	else if(pos==c)
+	deletee();
+	else if(pos>c)
+	printf("invalid");
+	else
+	{
+		struct node *t;
+		pos-=2;
+		temp=first;
+		while(pos--)
+		temp=temp->link;
+		t=temp->link;
+		temp->link=t->link;
+		t->link=NULL;
+		free(t);
+	}
+}
+
+void insertb ()
+{
+	nn=(struct node *)malloc(sizeof(struct node));
+	printf("enter element");
+	scanf("%d",&nn->x);
+	if(first==NULL)
+	{
+		nn->link=NULL;
+		last=nn;
+	}
+	else
+	nn->link=first;
+	first=nn;
+}
+
+void inserte()
+{
+	nn=(struct node *)malloc(sizeof(struct node));
+	printf("enter element");
+	scanf("%d",&nn->x);
+	if(first==NULL)
+	first=nn;
+	else
+	last->link=nn;
+	nn->link=NULL;
+	last=nn;
+}
+
+void insertp()
+{
+	int pos,c=count();
+	printf("Enter position");
+	scanf("%d",&pos);
+	if(pos==1)
+	insertb();
+	else if(pos==c+1)
+	inserte();
+	else
+	{
+	nn=(struct node *)malloc(sizeof(struct node));
+	printf("enter element");
+	scanf("%d",&nn->x);
+	temp=first;
+	pos-=2;
+	while(pos--)
+	temp=temp->link;
+	nn->link=temp->link;
+	temp->link=nn;
+	}
+}
+
+void insert()
+{
+	int i;
+	do{
+		printf("1:insertb 2:inserte 3:insertp");
+		scanf("%d",&i);
+		switch(i)
+		{
+			case 1: insertb(); break;
+			case 2: inserte(); break;
+			case 3: insertp(); break;
+		}
+		printf("do you want to continue with insert?(0/1)");
+		scanf("%d",&i);
+	}while(i==1);
+}
+
+void deletet()
+{
+	int i;
+	do{
+		printf("1:deleteb 2:deletee 3:deletep");
+		scanf("%d",&i);
+		switch(i)
+		{
+			case 1: deleteb(); break;
+			case 2: deletee(); break;
+			case 3: deletep(); break;
+		}
+		printf("do you want to continue with delete?(0/1)");
+		scanf("%d",&i);
+	}while(i==1);
+}
+
+int search()
+{
+	int e;
+	temp=first;
+	if(first==NULL)
+	return 0;
+	else
+	{
+		printf("enter element to be searched");
+		scanf("%d",&e);
+		while(temp!=NULL)
+		{
+			if(temp->x==e)
+			return 1;
+			temp=temp->link;
+		}
+		return 2;
+	}
+}
+
+int count()
+{
+	int c=0;
+	if(first==NULL)
+	c=0;
+	else{
+	temp=first;
+	while(temp!=NULL)
+	{
+		temp=temp->link;
+		c++;
+	}
+	return c;}
+}
+
+void display(struct node *f)
+{
+	if(f==NULL)
+	printf("LL empty");
+	else
+	{
+		printf("Content\n");
+		temp=f;
+		while(temp!=NULL)
+		{
+			printf("%d ",temp->x);
+			temp=temp->link;
+		}
+	}
+}
+
+int main()
+{
+	int i,d;
+	do{
+		printf("1:insert 2:delete 3:display 4:search 5:count 6:create");
+		scanf("%d",&i);
+		switch(i)
+		{
+			case 6: first=create(first); break;
+			case 1: insert(); break;
+			case 2: deletet(); break;
+			case 4: if((d=search())==0)
+					printf("empty");
+					else if(d==1)
+					printf("found");
+					else
+					printf("not found");
+					break;
+			case 3: display(first); break;
+			case 5: printf("%d elements",count()); break;
+		}
+		printf("do you want to continue with main?(0/1)");
+		scanf("%d",&i);
+	}while(i==1);
+	return 0;
+}
